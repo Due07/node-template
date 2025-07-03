@@ -1,0 +1,41 @@
+{
+  "name": "node-vite-template",
+  "version": "1.0.0",
+  "type": "module",
+  "bin": "dist/index.cjs",
+  "scripts": {
+    "start": "tsx --tsconfig tsconfig.json ./src/index.ts",
+    "dev": "vite ./src/index.ts",
+    "build": "vite build",
+    "build:pkg": "vite build && pkg . --out-path dist",
+    "build:pkg:debug": "vite build && pkg . --out-path dist --debug",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^28.0.6",
+    "@rollup/plugin-node-resolve": "^16.0.1",
+    "@types/node": "^22.12.0",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.3"
+  },
+  "dependencies": {
+    "art-template": "^4.13.4",
+    "inquirer": "^12.6.0",
+    "pkg": "^5.8.1"
+  },
+  "pkg": {
+    "assets": [
+      "node_modules/art-template/**/*",
+      "src/**/*",
+      "dist/Template/**/*"
+    ],
+    "targets": ["node18-win-x64"]
+  },
+  "engines": {
+    "node": ">=20.15.0"
+  }
+}

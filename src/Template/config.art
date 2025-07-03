@@ -1,0 +1,27 @@
+{{set isFilter = tableConfig && tableConfig.includes('isFilter'),
+isDialogForm = tableConfig && tableConfig.includes('isDialogForm')
+}}
+import {useHandleOptions} from '@/hooks/useHandleOption';
+
+{{if isFilter}}import type { IFormColumn } from '@/components/Form/type';
+import type { FormRules as TFormRules } from 'element-plus';{{/if}}
+{{if isTable}}import type { ITableColumn } from '@/types/components/Table';{{/if}}
+
+const HASH_OPTIONS = {
+  xx: [],
+};
+export const HandleOption = useHandleOptions(HASH_OPTIONS);
+{{if isFilter}}
+export const FilterColumn = computed<IFormColumn[]>(() => ([]));
+
+export const FilterRules: TFormRules = {
+  // serverId: { required: true, message: '请选择区服', trigger: 'change' },
+};
+{{/if}}
+{{if isTable}}export const TableColumn = computed<ITableColumn[]>(() => ([
+  { label: '名称', value: '字段xxxx', type: 'text' },
+]));{{/if}}
+
+{{if isDialogForm}}export const FormColumn: IFormColumn[] = [
+  { label: '名称', value: '字段xxxx', type: 'text', required: true },
+];{{/if}}

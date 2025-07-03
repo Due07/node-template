@@ -1,0 +1,107 @@
+{{set isPagination = tableConfig && tableConfig.includes('isPagination'),
+  isFilter = tableConfig && tableConfig.includes('isFilter'),
+  isExecl = tableConfig && tableConfig.includes('isExecl'),
+  isDialogForm = tableConfig && tableConfig.includes('isDialogForm')
+}}<template>
+  <TableComponent :table-data="tableData" :table-column="TableColumn">
+{{if isFilter}}    <FormComponent
+      label-width=""
+      inline
+      :column="FilterColumn"
+      :form-data="filterForm"
+      submit-name="查询"
+      :rules="FilterRules"
+      @onSubmit="onFilter"
+    />{{/if}}
+
+{{if isPagination || isExecl}}    <template #cardBody>
+{{if isExecl}}      <ExportExcel :column="TableColumn" :data="[...tableData]" />{{/if}}
+{{if isPagination}}      <Pagination v-model:pages="page" @fetch-data="fetchData" />{{/if}}
+    </template>{{/if}}
+  </TableComponent>
+
+{{if isDialogForm}}  <el-dialog class="action-dialog-form" v-model="visible">
+    <FormComponent
+      ref="dialogFormRef"
+      :column="FormColumn"
+      :form-data="dialogForm"
+      :filter-value="[]"
+      @onSubmit="submit"
+    />
+  </el-dialog>{{/if}}
+</template>
+
+<script lang="ts" setup>
+import TableComponent from '@/components/Table/index.vue';{{set imports = [
+  { type: isFilter, value: 'import FormComponent from \'@/components/Form/index.vue\';' },
+  { type: isPagination, value: 'import Pagination, { type TPagination } from \'@/components/Pagination\';' },
+  { type: isExecl, value: 'import ExportExcel from \'@/components/ExportExcel/index.vue\';' }
+]}}{{each imports}}
+{{if $value.type}}{{@ $value.value}}{{/if}}{{/each}}
+
+import { TableColumn{{if isFilter}}, FilterColumn, FilterRules{{/if}}{{if isDialogForm}}, FormColumn{{/if}} } from './config';
+import { ClearReactive } from '@/common/base/utils';
+import { ElLoading } from 'element-plus';
+
+/** 查询类型 */
+type TFilterForm = ❗❗❗❗❗❗❗;
+/** 列表类型 */
+type TTableData = ❗❗❗❗❗❗❗;
+
+/** 接口方法需要手动写 ❗❗❗❗❗❗❗❗❗ */
+const services = new xxxx();
+
+const filterForm = shallowReactive({} as TFilterForm);
+
+{{if isPagination}}const page = shallowReactive<TPagination>({ currentPage: 1, pageSize: 10, total: 0 });{{/if}}
+const tableData = shallowReactive<TTableData[]>([]);
+
+{{if isFilter}}const onFilter = (form = {...toRaw(filterForm)}) => {
+  ClearReactive(filterForm, { ...filterForm, ...form });
+
+{{if isPagination}}  page.currentPage = 1;{{/if}}
+  fetchData();
+};{{/if}}
+
+const fetchData = (params: TFilterForm = {...filterForm}) => {
+  const form = { {{if isPagination}}...page, {{/if}}...filterForm, ...params };
+  const loading = ElLoading.service({target: '.card-table-list' });
+
+  /** 接口方法需要手动写 ❗❗❗❗❗❗❗❗❗ */
+  services.xxx       (form).then(res => {
+    {{if isPagination}}const { list, total, pageNum } = res.data;
+    ClearReactive<TPagination>(page, { ...page, currentPage: pageNum, total });{{/if}}
+
+    const resultList = {{if isPagination}}[...list]{{else}}[...res.data]{{/if}};
+    ClearReactive(tableData, [...resultList]);
+  }).finally(loading.close);
+};
+
+{{if isDialogForm}}/** 表单提交类型 */
+type TDialogForm = ❗❗❗;
+const dialogFormRef = shallowRef<TFormExpose>();
+const [visible, dialogForm] = useFormDialog({} as TDialogForm, dialogFormRef, (nVal) => {
+  if (!nVal) ClearReactive(dialogForm, {});
+});
+
+/** 操作方法 ❗❗❗❗❗需要补充逻辑 ❗❗❗❗❗ */
+const onActions = (form: TTableData) => {
+  ClearReactive(dialogForm, { ...form });
+  visible.value = true;
+};
+
+const submit = (form: TDialogForm) => {
+  const loading = ElLoading.service({ target: '.action-dialog-form' });
+  /** 接口方法 */
+  service.❗❗❗.then(() => {
+    ElMessage.success('操作成功!');
+    visible.value = false;
+    fetchData();
+  }).finally(loading.close);
+}{{/if}}
+
+onMounted(() => fetchData());
+</script>
+
+<style lang="scss" scoped>
+</style>
