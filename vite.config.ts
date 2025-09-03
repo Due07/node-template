@@ -57,7 +57,7 @@ export default defineConfig({
       /** es6摇树优化 */
       treeshake: 'smallest',
       // 標記外部依賴，這些依賴將不會被打包進最終產物
-      external: ['path', 'fs', 'inquirer', 'art-template', 'child_process'],
+      external: ['path', 'fs', 'child_process'],
       output: {
         interop: 'auto',
         /** false: 禁用动态导入内联，保持资源文件独立输出 */

@@ -8,6 +8,7 @@
 - [x] webpack编译修改为使用Vite
 - [x] 打包结果编译为exe文件
 - [x] pkg打包执行时报错关闭
+- [x] 增加新的构建方式RsPack 弥补Vite的缺陷（esbuild天然不支持Node某些库）
 - [ ] 支持自定义写入到电脑指定路径之下
 - [ ] 
 

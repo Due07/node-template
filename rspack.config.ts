@@ -58,9 +58,9 @@ const defineConfigFn = (outputType: 'es' | 'common' = 'es', clean = true) => {
     experiments: { outputModule: outputType === 'es' },
 
     optimization: {
-      minimize: false,              // 禁用压缩
-      minimizer: [],               // 自定义压缩器
-      usedExports: false,          // 禁用 tree shaking
+      minimize: false,              // 是否压缩
+      // minimizer: [],               // 注释掉让 Rspack 使用默认压缩器
+      usedExports: true,          // 禁用 tree shaking
       sideEffects: true,          // 标记无副作用
       concatenateModules: false,   // 禁用模块连接
       splitChunks: {               // 启用按引入文件的代码分割
