@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "ESNext",
+    "lib": ["ESNext", "DOM"],
     "module": "ESNext",
     "outDir": "./dist",
     "strict": true,
@@ -9,7 +10,8 @@
     "moduleResolution": "node",
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "typeRoots" : ["./node_modules/@types", "@type/node", "./src/types/*"],
+
+    "typeRoots": ["./node_modules/@types", "@type/node", "./src/types"],
     "baseUrl": "./src",
     "paths": {
       "@/*": ["*"]

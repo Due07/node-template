@@ -6,6 +6,8 @@
   "scripts": {
     "start": "tsx --tsconfig tsconfig.json ./src/index.ts",
     "dev": "vite ./src/index.ts",
+    "build:rspack-watch": "tsx node_modules/@rspack/cli/bin/rspack.js build --watch",
+    "build:rspack": "tsx node_modules/@rspack/cli/bin/rspack.js build",
     "build": "vite build",
     "build:pkg": "vite build && pkg . --out-path dist",
     "build:pkg:debug": "vite build && pkg . --out-path dist --debug",
@@ -15,9 +17,16 @@
   "license": "ISC",
   "description": "",
   "devDependencies": {
+    "@babel/preset-env": "^7.28.3",
+    "@babel/preset-typescript": "^7.27.1",
     "@rollup/plugin-commonjs": "^28.0.6",
     "@rollup/plugin-node-resolve": "^16.0.1",
+    "@rspack/cli": "^1.5.2",
+    "@rspack/core": "^1.5.2",
     "@types/node": "^22.12.0",
+    "babel-loader": "^10.0.0",
+    "esbuild-loader": "^4.3.0",
+    "ts-loader": "^9.5.4",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "vite": "^6.3.3"
@@ -33,7 +42,9 @@
       "src/**/*",
       "dist/Template/**/*"
     ],
-    "targets": ["node18-win-x64"]
+    "targets": [
+      "node18-win-x64"
+    ]
   },
   "engines": {
     "node": ">=20.15.0"

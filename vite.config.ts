@@ -60,10 +60,12 @@ export default defineConfig({
       external: ['path', 'fs', 'inquirer', 'art-template', 'child_process'],
       output: {
         interop: 'auto',
+        /** false: 禁用动态导入内联，保持资源文件独立输出 */
         inlineDynamicImports: true,
         globals: {},
         compact: true, // 移除空格和注释
         minifyInternalExports: true, // 压缩内部导出
+        assetFileNames: 'assets/[ext]/[name]-[hash].[ext]',
       },
     },
   },

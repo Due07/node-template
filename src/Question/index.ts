@@ -1,6 +1,7 @@
 import inquirer from 'inquirer';
 import fs from 'fs';
 import { PromptConfig } from './config';
+import ImgBg from '@/assets/images/bg.png'
 // import TableTem from '@/Template/Table/index.art';
 
 import artTemplate from '@/common/ArtTemplate';
@@ -9,7 +10,9 @@ import StreamFile from '@/common/write';
 // import TableArt from '@/Template/Table/index.art';
 // const result = TableArt({value: 111, data: 'xs'});
 
-// 暫停函數，等待用戶按鍵
+// console.log(ImgBg);
+
+// 暂停函数，等待用户按键退出
 const pauseBeforeExit = () => {
   if (process.pkg) {
     console.log('\n操作完成。按任意鍵退出...');
