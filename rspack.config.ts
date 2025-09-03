@@ -2,10 +2,10 @@ import { defineConfig } from '@rspack/cli';
 import { RspackOptions } from '@rspack/core';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import swcLoader from './rspack/tsRules/swc-loader';
-// import tsLoader from './rspack/tsRules/ts-loader';
-// import esbuildLoader from './rspack/tsRules/esbuild-loader';
-// import babelLoader from './rspack/tsRules/babel-loader';
+import swcLoader from './rspack/tsRules/swcLoader';
+// import tsLoader from './rspack/tsRules/tsLoader';
+// import esbuildLoader from './rspack/tsRules/esbuildLoader';
+// import babelLoader from './rspack/tsRules/babelLoader';
 
 type TSystemType = 'es' | 'common';
 type TSystemConfig = {
