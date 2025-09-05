@@ -32,8 +32,7 @@
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "vite": "^6.3.3",
-    "vite-plugin-checker": "^0.10.3",
-    "webpack-node-externals": "^3.0.0"
+    "vite-plugin-checker": "^0.10.3"
   },
   "dependencies": {
     "art-template": "^4.13.4",
