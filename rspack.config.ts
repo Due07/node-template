@@ -3,7 +3,6 @@ import { RspackOptions } from '@rspack/core';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import swcLoader from './rspack/tsRules/swcLoader';
-import CheckerPlugin from 'fork-ts-checker-webpack-plugin';
 // import tsLoader from './rspack/tsRules/tsLoader';
 // import esbuildLoader from './rspack/tsRules/esbuildLoader';
 // import babelLoader from './rspack/tsRules/babelLoader';
@@ -43,12 +42,7 @@ const defineConfigFn = (outputType: 'es' | 'common' = 'es', clean = true) => {
   return defineConfig({
     entry: { index: './src/index.ts' },
     target: ['node'],
-    plugins: [
-      new CheckerPlugin({
-        typescript: { configFile: 'tsconfig.json' },
-        async: false,
-      }),
-    ],
+    plugins: [],
     externals: outputType === 'es' ? {
       'art-template': 'import art-template',
       // inquirer 12.6 版本就是es版本，但是vite打包的话就有问题，所以降版本

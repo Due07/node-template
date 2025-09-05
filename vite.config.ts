@@ -2,17 +2,11 @@ import { defineConfig } from 'vite';
 import { resolve } from 'path';
 import nodeResolve from '@rollup/plugin-node-resolve';
 import pluginCommonjs from '@rollup/plugin-commonjs';
-import Checker from 'vite-plugin-checker';
 import fs from 'fs';
 import path from 'path';
 
 export default defineConfig({
-  plugins: [
-    Checker({
-      typescript: { tsconfigPath: 'tsconfig.json' }, // 启用 TypeScript 类型检查
-      enableBuild: true, // 在构建时也进行检查
-    }),
-  ],
+  plugins: [],
   resolve: {
     alias: {
       '@': resolve(__dirname, 'src'),

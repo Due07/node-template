@@ -6,9 +6,10 @@
   "scripts": {
     "start": "tsx --tsconfig tsconfig.json ./src/index.ts",
     "dev": "vite ./src/index.ts",
-    "build:rspack-watch": "tsx node_modules/@rspack/cli/bin/rspack.js build --watch",
-    "build:rspack": "tsx node_modules/@rspack/cli/bin/rspack.js build",
-    "build": "vite build",
+    "type-check": "tsc",
+    "build:rspack-watch": "npm run type-check && tsx node_modules/@rspack/cli/bin/rspack.js build --watch",
+    "build:rspack": "npm run type-check && tsx node_modules/@rspack/cli/bin/rspack.js build",
+    "build": "npm run type-check && vite build",
     "build:pkg": "vite build && pkg . --out-path dist",
     "build:pkg:debug": "vite build && pkg . --out-path dist --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -27,12 +28,10 @@
     "@types/node": "^22.12.0",
     "babel-loader": "^10.0.0",
     "esbuild-loader": "^4.3.0",
-    "fork-ts-checker-webpack-plugin": "^9.1.0",
     "ts-loader": "^9.5.4",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
-    "vite": "^6.3.3",
-    "vite-plugin-checker": "^0.10.3"
+    "vite": "^6.3.3"
   },
   "dependencies": {
     "art-template": "^4.13.4",
