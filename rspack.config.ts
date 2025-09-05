@@ -3,6 +3,7 @@ import { RspackOptions } from '@rspack/core';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import swcLoader from './rspack/tsRules/swcLoader';
+import CheckerPlugin from 'fork-ts-checker-webpack-plugin';
 // import tsLoader from './rspack/tsRules/tsLoader';
 // import esbuildLoader from './rspack/tsRules/esbuildLoader';
 // import babelLoader from './rspack/tsRules/babelLoader';
@@ -16,8 +17,8 @@ type TSystemConfig = {
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 const SystemModule: Record<TSystemType, TSystemConfig> = {
-  es: { outputDirery: '/es/', suffix: 'js' },
-  common: { outputDirery: '/common/', suffix: 'cjs' },
+  es: { outputDirery: '/es', suffix: 'js' },
+  common: { outputDirery: '/common', suffix: 'cjs' },
 };
 
 /**
@@ -29,22 +30,31 @@ const defineConfigFn = (outputType: 'es' | 'common' = 'es', clean = true) => {
 
   const CommonOutput: RspackOptions['output'] = {
     path: path.resolve(__dirname, `rsDist${moduleType.outputDirery}`),
-    filename: `/[name].${moduleType.suffix}`,
+    filename: `[name].${moduleType.suffix}`,
     clean,
     library: { type: 'commonjs2' },
   }
   const EsOutput: RspackOptions['output'] = {
     module: true,
     path: path.resolve(__dirname, `rsDist${moduleType.outputDirery}`),
-    filename: `/[name].${moduleType.suffix}`,
+    filename: `[name].${moduleType.suffix}`,
     clean,
-    library: { type: 'module' },
   }
   return defineConfig({
     entry: { index: './src/index.ts' },
     target: ['node'],
-    externals: {
-      'art-template': 'commonjs art-template'
+    plugins: [
+      new CheckerPlugin({
+        typescript: { configFile: 'tsconfig.json' },
+        async: false,
+      }),
+    ],
+    externals: outputType === 'es' ? {
+      'art-template': 'import art-template',
+      // inquirer 12.6 版本就是es版本，但是vite打包的话就有问题，所以降版本
+      'inquirer': 'import inquirer'
+    } : {
+      'art-template': 'commonjs art-template',
       //  ↑ 模块名称      ↑ 外部依赖格式
     },
     devtool: false,
@@ -69,14 +79,14 @@ const defineConfigFn = (outputType: 'es' | 'common' = 'es', clean = true) => {
           vendor: {
             test: /[\\\/]node_modules[\\\/]/,
             name: 'vendors',
-            filename: `/[name]-[contenthash].${moduleType.suffix}`,
+            filename: `[name]-[contenthash].${moduleType.suffix}`,
             chunks: 'all',
             // https://rspack.rs/zh/plugins/webpack/split-chunks-plugin#splitchunkscachegroupscachegrouppriority
             priority: 1
           },
           common: {
             name: 'common',
-            filename: `/[name]-[contenthash].${moduleType.suffix}`,
+            filename: `[name]-[contenthash].${moduleType.suffix}`,
             minChunks: 2, // 被引用至少2次的模块，将被分包
             chunks: 'all',
             priority: 3
