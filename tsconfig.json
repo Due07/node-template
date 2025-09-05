@@ -7,9 +7,11 @@
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "moduleResolution": "node",
-    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": true,
+    "skipLibCheck": true, // 跳过库文件检查
+    "noEmit": true, // 只做类型检查，不生成文件
+    "incremental": true,        // 启用增量编译
+    "tsBuildInfoFile": ".tsbuildinfo",  // 增量信息文件位置
 
     "typeRoots": ["./node_modules/@types", "@type/node", "./src/types"],
     "baseUrl": "./src",

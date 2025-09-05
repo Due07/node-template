@@ -7,9 +7,11 @@
     "start": "tsx --tsconfig tsconfig.json ./src/index.ts",
     "dev": "vite ./src/index.ts",
     "type-check": "tsc",
+
     "build:rspack-watch": "npm run type-check && tsx node_modules/@rspack/cli/bin/rspack.js build --watch",
     "build:rspack": "npm run type-check && tsx node_modules/@rspack/cli/bin/rspack.js build",
     "build": "npm run type-check && vite build",
+
     "build:pkg": "vite build && pkg . --out-path dist",
     "build:pkg:debug": "vite build && pkg . --out-path dist --debug",
     "test": "echo \"Error: no test specified\" && exit 1"
